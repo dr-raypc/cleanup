@@ -12,6 +12,11 @@ function cleanup {
 	Remove-Item $wintempfiles -Recurse -Force -ErrorAction SilentlyContinue
 	Write-Host "[x] " -ForegroundColor Green -NoNewLine
 	Write-Host "$wintempsize Windows Temp Files Removed.`n"
+	$windmpfiles = gci c:\ *.dmp -Recurse -Force -ErrorAction SilentlyContinue
+	$windmpsize = "{0:N2} GB" -f ((gci $windmpfiles -Recurse -ErrorAction SilentlyContinue | measure Length -s).sum / 1Gb)
+	Remove-Item $windmpfiles -Recurse -Force -ErrorAction SilentlyContinue
+	Write-Host "[x] " -ForegroundColor Green -NoNewLine
+	Write-Host "$windmpsize Windows Dump Files Removed.`n"
 	Optimize-Volume -DriveLetter C -ReTrim -ErrorAction SilentlyContinue
 	Write-Host "[x] " -ForegroundColor Green -NoNewLine
 	Write-Host "Optimized SSD (ReTrim)`n"
