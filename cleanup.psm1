@@ -5,6 +5,9 @@ param(
     [switch]$server
   )
 function cleanup {
+	param(
+    	[switch]$server
+  	)
 	if ($server) {
 		#	Get System Uptime	
 		$uptime = (get-date) - (gcim Win32_OperatingSystem).LastBootUpTime | Select-Object days,hours,minutes
